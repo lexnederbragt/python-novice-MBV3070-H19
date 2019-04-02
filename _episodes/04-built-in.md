@@ -220,6 +220,13 @@ result of print is None
 ~~~
 {: .output}
 
+## Exercises on slides
+* What happens when
+* Use of functions
+
+
+<!--
+
 > ## What Happens When
 >
 > 1. Explain in simple terms the order of operations in the following program:
@@ -259,7 +266,7 @@ result of print is None
 > ~~~
 > {: .python}
 > > ## Solution
-> > 1. 
+> > 1.
 > > ~~~
 > > print(max(easy_string))
 > > ~~~
@@ -284,7 +291,7 @@ result of print is None
 > > 4
 > > ~~~
 > > {: .output}
-> > 
+> >
 > > 2. It throws a TypeError. The command is trying to run `max(4, 'tin')` and you can't compare
 > >    a string and an integer
 > {: .solution}
@@ -314,3 +321,5 @@ result of print is None
 > > `name[len(name) - 1]`
 > {: .solution}
 {: .challenge}
+
+-->

@@ -165,6 +165,27 @@ sod
 ~~~
 {: .output}
 
+> ## Streng slicing
+> Vi har denne strengen:
+>
+> ~~~
+> enig = "Enige og tro til Dovre faller"
+> ~~~
+> {: .language-python}
+>
+> Skriv ut, med hjelp av slicing,
+>
+> 1. "tro"
+> 2. "Dovre"
+> 3. "e og t"
+>
+>> ## Solution
+>> 1. `print(enig[9:12])`
+>> 2. `print(enig[17:22])`
+>> 3. `print(enig[4:10])`
+>{: .solution}
+{: .challenge}
+
 ## Use the built-in function `len` to find the length of a string.
 
 ~~~
@@ -225,7 +246,7 @@ print(ewr_422_yY, 'is', flabadab, 'years old')
 > > y = swap   # 3.0          # 1.0          # 1.0           #
 > > ~~~
 > > {: .output}
-> > 
+> >
 > > These three lines exchange the values in `x` and `y` using the `swap`
 > > variable for temporary storage. This is a fairly common programming idiom.
 >{: .solution}
@@ -323,7 +344,7 @@ print(ewr_422_yY, 'is', flabadab, 'years old')
 > 3.  What does `thing[:high]` (without a value before the colon) do?
 > 4.  What does `thing[:]` (just a colon) do?
 > 5.  What does `thing[number:negative-number]` do?
-> 6.  What happens when you choose a `high` value which is out of range? (i.e., try `atom_name[0:15]`) 
+> 6.  What happens when you choose a `high` value which is out of range? (i.e., try `atom_name[0:15]`)
 >
 > > ## Solutions
 > >

@@ -198,41 +198,40 @@ IndexError: string index out of range
 ~~~
 {: .output}
 
-> ## Fill in the Blanks
+> ## Working With the End
 >
-> Fill in the blanks so that the program below produces the output shown.
+> What does the following program print?
 >
 > ~~~
-> values = ____
-> values.____(1)
-> values.____(3)
-> values.____(5)
-> print('first time:', values)
-> values = values[____]
-> print('second time:', values)
+> element = 'helium'
+> print(element[-1])
 > ~~~
 > {: .python}
 >
-> ~~~
-> first time: [1, 3, 5]
-> second time: [3, 5]
-> ~~~
-> {: .output}
+> 1.  How does Python interpret a negative index?
+> 2.  If a list or string has N elements,
+>     what is the most negative index that can safely be used with it,
+>     and what location does that index represent?
+> 3.  If `values` is a list, what does `del values[-1]` do?
+> 4.  How can you display all elements but the last one without changing `values`?
+>     (Hint: you will need to combine slicing and negative indexing.)
 >
 > > ## Solution
-> > ~~~
-> > values = []
-> > values.append(1)
-> > values.append(3)
-> > values.append(5)
-> > print('first time:', values)
-> > values = values[1:]
-> > print('second time:', values)
-> > ~~~
-> > {: .python}
+> > The program prints `m`.
+> > 1. Python interprets a negative index as starting from the end (as opposed to
+> >    starting from the beginning).  The last element is `-1`.
+> > 2. The last index that can safely be used with a list of N elements is element
+> >    `-N`, which represents the first element.
+> > 3. `del values[-1]` removes the last element from the list.
+> > 4. `values[:-1]`
 > {: .solution}
 {: .challenge}
 
+
+## Exercises on slides
+* Gjør ferdig koden: lister
+
+<!--
 > ## How Large is a Slice?
 >
 > If 'low' and 'high' are both non-negative integers,
@@ -270,159 +269,4 @@ IndexError: string index out of range
 > {: .solution}
 {: .challenge}
 
-> ## Working With the End
->
-> What does the following program print?
->
-> ~~~
-> element = 'helium'
-> print(element[-1])
-> ~~~
-> {: .python}
->
-> 1.  How does Python interpret a negative index?
-> 2.  If a list or string has N elements,
->     what is the most negative index that can safely be used with it,
->     and what location does that index represent?
-> 3.  If `values` is a list, what does `del values[-1]` do?
-> 4.  How can you display all elements but the last one without changing `values`?
->     (Hint: you will need to combine slicing and negative indexing.)
->
-> > ## Solution
-> > The program prints `m`.
-> > 1. Python interprets a negative index as starting from the end (as opposed to
-> >    starting from the beginning).  The last element is `-1`.
-> > 2. The last index that can safely be used with a list of N elements is element
-> >    `-N`, which represents the first element.
-> > 3. `del values[-1]` removes the last element from the list.
-> > 4. `values[:-1]`
-> {: .solution}
-{: .challenge}
-
-> ## Stepping Through a List
->
-> What does the following program print?
->
-> ~~~
-> element = 'fluorine'
-> print(element[::2])
-> print(element[::-1])
-> ~~~
-> {: .python}
->
-> 1.  If we write a slice as `low:high:stride`, what does `stride` do?
-> 2.  What expression would select all of the even-numbered items from a collection?
->
-> > ## Solution
-> > The program prints
-> > ~~~
-> > furn
-> > eniroulf
-> > ~~~
-> > {: .python}
-> > 1. `stride` is the step size of the slice
-> > 2. The slice `1::2` selects all even-numbered items from a collection: it starts
-> >    with element `1` (which is the second element, since indexing starts at `0`),
-> >    goes on until the end (since no `end` is given), and uses a step size of `2`
-> >    (i.e., selects every second element).
-> {: .solution}
-{: .challenge}
-
-> ## Slice Bounds
->
-> What does the following program print?
->
-> ~~~
-> element = 'lithium'
-> print(element[0:20])
-> print(element[-1:3])
-> ~~~
-> {: .python}
->
-> > ## Solution
-> > ~~~
-> > lithium
-> > 
-> > ~~~
-> > {: .python}
-> {: .solution}
-{: .challenge}
-
-> ## Sort and Sorted
->
-> What do these two programs print?
-> In simple terms, explain the difference between `sorted(letters)` and `letters.sort()`.
->
-> ~~~
-> # Program A
-> letters = list('gold')
-> result = sorted(letters)
-> print('letters is', letters, 'and result is', result)
-> ~~~
-> {: .python}
->
-> ~~~
-> # Program B
-> letters = list('gold')
-> result = letters.sort()
-> print('letters is', letters, 'and result is', result)
-> ~~~
-> {: .python}
->
-> > ## Solution
-> > Program A prints
-> > ~~~
-> > letters is ['g', 'o', 'l', 'd'] and result is ['d', 'g', 'l', 'o']
-> > ~~~
-> > {: .python}
-> > Program B prints
-> > ~~~
-> > letters is ['d', 'g', 'l', 'o'] and result is None
-> > ~~~
-> > {: .python}
-> > `sorted(letters)` returns a sorted copy of the list `letters` (the original
-> > list `letters` remains unchanged), while `letters.sort()` sorts the list
-> > `letters` in-place and does not return anything.
-> {: .solution}
-{: .challenge}
-
-> ## Copying (or Not)
->
-> What do these two programs print?
-> In simple terms, explain the difference between `new = old` and `new = old[:]`.
->
-> ~~~
-> # Program A
-> old = list('gold')
-> new = old      # simple assignment
-> new[0] = 'D'
-> print('new is', new, 'and old is', old)
-> ~~~
-> {: .python}
->
-> ~~~
-> # Program B
-> old = list('gold')
-> new = old[:]   # assigning a slice
-> new[0] = 'D'
-> print('new is', new, 'and old is', old)
-> ~~~
-> {: .python}
->
-> > ## Solution
-> > Program A prints
-> > ~~~
-> > new is ['D', 'o', 'l', 'd'] and old is ['D', 'o', 'l', 'd']
-> > ~~~
-> > Program B prints
-> > ~~~
-> > new is ['D', 'o', 'l', 'd'] and old is ['g', 'o', 'l', 'd']
-> > ~~~
-> > {: .python}
-> > `new = old` makes `new` a reference to the list `old`; `new` and `old` point
-> > towards the same object.
-> > 
-> > `new = old[:]` however creates a new list object `new` containing all elements
-> > from the list `old`; `new` and `old` are different objects.
-> {: .solution}
-{: .challenge}
+-->
