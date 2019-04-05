@@ -227,9 +227,140 @@ IndexError: string index out of range
 > {: .solution}
 {: .challenge}
 
+## Dictionaries contain key-value pairs
+
+<!-- from https://www.thegeekstuff.com/2013/05/python-dictionary/?utm_source=tuicool -->
+
+The last kind of new data structure we'll introduce is the Dictionary.
+
+Here is an example of how we can create a dictionary in Python:
+
+~~~
+myDict = {"A":"Apple", "B":"Boy", "C":"Cat"}
+~~~
+{: .python}
+
+In the above example:
+
+- A dictionary is created.
+- This dictionary contains three elements.
+- Each element constitutes of a key value pair.
+- This dictionary can be accessed using the variable myDict.
+
+If you just type the name of the variable myDict, all the key value pairs in the dictionary will be printed.
+
+~~~
+myDict
+~~~
+{: .python}
+~~~
+{'A': 'Apple', 'C': 'Cat', 'B': 'Boy'}
+~~~
+{: .output}
+
+
+### Access Dictionary Elements
+
+Once a dictionary is created, you can access it using the variable to which it is assigned during creation. For example, in our case, the variable myDict can be used to access the dictionary elements.
+
+Here is how this can be done:
+
+~~~
+myDict["A"]
+myDict["B"]
+myDict["C"]
+~~~
+{: .python}
+~~~
+'Apple'
+'Boy'
+'Cat'
+~~~
+{: .output}
+
+So you can see that using the variable myDict and Key as index, the value of corresponding key can be accessed.
+
+
+There is one thing that you need to keep in your mind. Only dictionary keys can be used as indexes. This means that myDict[“A”] would produce ‘Apple’ in output but myDict[“Apple”] cannot produce ‘A’ in the output.
+
+~~~
+myDict["Apple"]
+~~~
+{: .python}
+~~~
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+KeyError: 'Apple'
+~~~
+{: .output}
+
+So we see that Python complained about ‘Apple’ being used as index.
+
+### Update Dictionary Elements
+
+Just the way dictionary values are accessed using keys, the values can also be modified using the dictionary keys. Here is an example to modify python dictionary element:
+
+~~~
+myDict["A"] = "Application"
+myDict["A"]
+myDict
+~~~
+{: .python}
+~~~
+'Application'
+{'A': 'Application', 'C': 'Cat', 'B': 'Boy'}
+~~~
+{: .output}
+
+You can see that in the example shown above, the value of key ‘A’ was changed from ‘Apple’ to ‘Application’ easily.  This way we can easily conclude that there could not be two keys with same name in a dictionary.
+
+### Delete Dictionary Elements
+
+Individual elements can be deleted easily from a dictionary. Here is an example to remove an element from dictionary.
+
+~~~
+del myDict["A"]
+myDict
+~~~
+{: .python}
+~~~
+{'C': 'Cat', 'B': 'Boy'}
+~~~
+{: .output}
+
+So you can see that by using ‘del’ an element can easily be deleted from the dictionary.
+
+If you want to delete complete dictionary ie all the elements in the dictionary then it can be done using the clear() function. Here is an example :
+
+~~~
+myDict.clear()
+myDict
+~~~
+{: .python}
+~~~
+{}
+~~~
+{: .output}
+
+So you see that all the elements were deleted making the dictionary empty.
+
+This naturally leads to the command to set up an empty dictionary:
+
+~~~
+newDict = {}
+newDict
+~~~
+{: .python}
+~~~
+{}
+~~~
+{: .output}
+
 
 ## Exercises on slides
+* Uses for dictionaries in bioinformatics
 * Gjør ferdig koden: lister
+
 
 <!--
 > ## How Large is a Slice?

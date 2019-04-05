@@ -172,41 +172,18 @@ final velocity: 30.0
 ~~~
 {: .output}
 
-## Create a table showing variables' values to trace a program's execution.
-
-<table>
-  <tr>
-    <td><strong>i</strong></td>
-    <td>0</td>
-    <td>.</td>
-    <td>1</td>
-    <td>.</td>
-    <td>2</td>
-    <td>.</td>
-    <td>3</td>
-    <td>.</td>
-    <td>4</td>
-    <td>.</td>
-  </tr>
-  <tr>
-    <td><strong>velocity</strong></td>
-    <td>10.0</td>
-    <td>20.0</td>
-    <td>.</td>
-    <td>30.0</td>
-    <td>.</td>
-    <td>25.0</td>
-    <td>.</td>
-    <td>20.0</td>
-    <td>.</td>
-    <td>30.0</td>
-  </tr>
-</table>
 
 *   The program must have a `print` statement *outside* the body of the loop
     to show the final value of `velocity`,
     since its value is updated by the last iteration of the loop.
 
+## Use Python Tutor to trace execution of this example
+
+## Exercises on slides
+* Reorder code
+
+
+<!--
 > ## Compound Relations Using `and`, `or`, and Parentheses
 >
 > Often, you want some combination of things to be true.  You can combine
@@ -425,3 +402,5 @@ final velocity: 30.0
 > `apply()` to do what it says, apply the `calculate_life_quartile` to the
 > value of this column for every row in the dataframe.
 {: .callout}
+
+-->

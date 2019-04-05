@@ -130,6 +130,34 @@ for p in primes:
 ~~~
 {: .output}
 
+Let's visualize this loop using Python Tutor. In the notebook, write
+
+~~~
+%load tutor.py
+~~~
+{: .python}
+
+This loads the following code:
+
+~~~
+from metakernel import register_ipython_magics
+register_ipython_magics()
+~~~
+{: .python}
+
+Execute the code (it gives no output).
+
+Now you can rerun the previous for loop in a new cell that starts with `%%tutor`:
+~~~
+%%tutor
+primes = [2, 3, 5]
+for p in primes:
+    squared = p ** 2
+    cubed = p ** 3
+    print(p, squared, cubed)
+~~~
+{: .python}
+
 ## Use `range` to iterate over a sequence of numbers.
 
 *   The built-in function `range` produces a sequence of numbers.
@@ -151,6 +179,49 @@ a range is not a list: range(0, 3)
 2
 ~~~
 {: .output}
+
+## A string is also a collection that can be looped over.
+
+~~~
+organ = "liver"
+for char in organ:
+    print(char)
+~~~
+{: .python}
+
+This means that if we have a DNA string, we can loop over the individual bases:
+
+~~~
+DNA = "ACGTGC"
+for base in DNA:
+    print(base)
+~~~
+{: .python}
+
+As an example, let's use a for loop to de the same as the `.upper()` function. `.upper()` changes all characters to upper case:
+
+
+~~~
+dna1 = "acgtgc"
+print(dna1)
+dna2 = dna1.upper()
+print(dna2)
+~~~
+{: .python}
+
+With a for loop, we could do it like this:
+
+~~~
+dna1 = "acgtgc"
+dna2 = ''
+print(dna1)
+for base in dna1:
+    dna2 = dna2 + base.upper()
+print(dna2)
+~~~
+{: .python}
+
+Rerun this loop using Python Tutor as described above.
 
 ## The Accumulator pattern turns many values into one.
 
@@ -177,6 +248,13 @@ print(total)
     *   Assign that to `total`, replacing the current value.
 *   We have to add `number + 1` because `range` produces 0..9, not 1..10.
 
+## Exercises on slides
+* Reversing a String
+* Summarising DNA strings
+* Cumulative Sum
+
+<!--
+
 > ## Classifying Errors
 >
 > Is an indentation error a syntax error or a runtime error?
@@ -198,7 +276,7 @@ print(total)
 > ~~~
 > {: .python}
 > > ## Solution
-> > 
+> >
 > > | Line no | Variables            |
 > > |---------|----------------------|
 > > | 1       | total = 0            |
@@ -211,145 +289,13 @@ print(total)
 > {: .solution}
 {: .challenge}
 
-> ## Reversing a String
->
-> Fill in the blanks in the program below so that it prints "nit"
-> (the reverse of the original character string "tin").
->
-> ~~~
-> original = "tin"
-> result = ____
-> for char in original:
->     result = ____
-> print(result)
-> ~~~
-> {: .python}
-> > ## Solution
-> > ~~~
-> > original = "tin"
-> > result = ""
-> > for char in original:
-> >     result = char + result
-> > print(result)
-> > ~~~
-> > {: .python}
-> {: .solution}
-{: .challenge}
-
-> ## Practice Accumulating
->
-> Fill in the blanks in each of the programs below
-> to produce the indicated result.
->
-> ~~~
-> # Total length of the strings in the list: ["red", "green", "blue"] => 12
-> total = 0
-> for word in ["red", "green", "blue"]:
->     ____ = ____ + len(word)
-> print(total)
-> ~~~
-> {: .python}
-> > ## Solution
-> > ~~~
-> > total = 0
-> > for word in ["red", "green", "blue"]:
-> >     total = total + len(word)
-> > print(total)
-> > ~~~
-> > {: .python}
-> {: .solution}
->
-> ~~~
-> # List of word lengths: ["red", "green", "blue"] => [3, 5, 4]
-> lengths = ____
-> for word in ["red", "green", "blue"]:
->     lengths.____(____)
-> print(lengths)
-> ~~~
-> {: .python}
-> > ## Solution
-> > ~~~
-> > lengths = []
-> > for word in ["red", "green", "blue"]:
-> >     lengths.append(len(word))
-> > print(lengths)
-> > ~~~
-> > {: .python}
-> {: .solution}
->
-> ~~~
-> # Concatenate all words: ["red", "green", "blue"] => "redgreenblue"
-> words = ["red", "green", "blue"]
-> result = ____
-> for ____ in ____:
->     ____
-> print(result)
-> ~~~
-> {: .python}
-> > ## Solution
-> > ~~~
-> > words = ["red", "green", "blue"]
-> > result = ""
-> > for word in words:
-> >     result = result + word
-> > print(result)
-> > ~~~
-> > {: .python}
-> {: .solution}
->
-> ~~~
-> # Create acronym: ["red", "green", "blue"] => "RGB"
-> # write the whole thing
-> ~~~
-> {: .python}
-> > ## Solution
-> > ~~~
-> > acronym = ""
-> > for word in ["red", "green", "blue"]:
-> >     acronym = acronym + word[0].upper()
-> > print(acronym)
-> > ~~~
-> > {: .python}
-> {: .solution}
-{: .challenge}
-
-> ## Cumulative Sum
->
-> Reorder and properly indent the lines of code below
-> so that they print an array with the cumulative sum of data.
-> The result should be `[1, 3, 5, 10]`.
->
-> ~~~
-> cumulative += [sum]
-> for number in data:
-> cumulative = []
-> sum += number
-> sum = 0
-> print(cumulative)
-> data = [1,2,2,5]
-> ~~~
-> {: .python}
-> > ## Solution
-> > ~~~
-> > sum = 0
-> > data = [1,2,2,5]
-> > cumulative = []
-> > for number in data:
-> >     sum += number
-> >     cumulative.append(sum)
-> > print(cumulative)
-> > ~~~
-> > {: .python}
-> {: .solution}
-{: .challenge}
-
 > ## Identifying Variable Name Errors
 >
 > 1. Read the code below and try to identify what the errors are
 >    *without* running it.
 > 2. Run the code and read the error message.
 >    What type of `NameError` do you think this is?
->    Is it a string with no quotes, a misspelled variable, or a 
+>    Is it a string with no quotes, a misspelled variable, or a
 >    variable that should have been defined but was not?
 > 3. Fix the error.
 > 4. Repeat steps 2 and 3, until you have fixed all the errors.
@@ -399,3 +345,4 @@ print(total)
 > > {: .python}
 > {: .solution}
 {: .challenge}
+-->
