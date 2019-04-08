@@ -14,19 +14,17 @@ keypoints:
 
 The hemoglobin sequences are so large, that we should not store them directly in the code.
 For this reason we have stored them in two files, one named `hemoglobin_normal.fasta` and
-one named `hemoglobin_sickle.fasta`.
+one named `hemoglobin_sickle.fasta`. These files are stored in the folder called `data`.
 
 Python has a function for opening any file, named `open()`:
-<!--  -->
 
 ~~~
-f = open("hemoglobin_normal.fasta", "r")
+f = open("data/hemoglobin_normal.fasta", "r")
 ~~~
 {: .python}
 
-<!--  -->
 The first argument to `open()` is the name of the file we want to open given as a
-string.
+string. We need to add the `data` folder in front of it, followed by a forward slash `/`.
 The second argument, the string `"r"` (for read),
 tells that we want to open the file for reading.
 The content of the file `f` can be read in various ways,
@@ -40,7 +38,6 @@ print(lines)
 ~~~
 {: .python}
 
-<!--  -->
 
 This data is stored in the FASTA format.
 FASTA is a popular file format used for storing DNA sequences.
@@ -55,7 +52,6 @@ Our mRNA hemoglobin sequence files have the following header:
 ~~~
 {: .output}
 
-<!--  -->
 This header tells us we have mRNA for a specific subunit of hemoglobin for
 humans.
 We do not need the header for our purpose, because we already know we are
@@ -74,14 +70,12 @@ print("Hello\nWorld!")
 
 We should always close a file when we are finished working with it.
 We do this by using the `close()` method:
-<!--  -->
 
 ~~~
 f.close()
 ~~~
 {: .python}
 
-<!--  -->
 
 We would like to work with one string for the entire mRNA sequence.
 We turn `lines` into one string by starting with an empty string called `mRNA`,
@@ -100,11 +94,9 @@ print(mRNA)
 ~~~
 {: .python}
 
-<!--  -->
 
 Strings have a method called `.strip()`, which removes all whitespace (tabs,
 newlines, and spaces) at the beginning and the end of the string:
-<!--  -->
 
 ~~~
 my_string = "      spaces and newlines   \n\n\n"
@@ -116,7 +108,6 @@ print(my_string.strip())
 ~~~
 {: .python}
 
-<!--  -->
 
 We use `strip()` to remove the newline symbols from each line in `lines`.
 We also want to ignore the first line with the header,
@@ -132,7 +123,6 @@ print(mRNA)
 ~~~
 {: .python}
 
-<!--  -->
 
 ~~~
 ACAUUUGCUUCUGACACAAC ...(Truncated)... AAAACAUUUAUUUUCAUUGC
@@ -175,7 +165,6 @@ f = open("our_file.txt", "w")
 ~~~
 {: .python}
 
-<!--  -->
 
 If the file already exists, and we want to keep the existing content,
 we must use the `"a"` argument.
@@ -190,26 +179,22 @@ f.write("The first line.\n")
 ~~~
 {: .python}
 
-<!--  -->
 
 ~~~
 f.write("The second line.")
 ~~~
 {: .python}
 
-<!--  -->
 `f.write()` does not automatically give us newlines from one function call to the next.
 To get a newline we therefore have to write `\n` at the end of our string.
 
 We have to close the file once we are finished writing to it:
-<!--  -->
 
 ~~~
 f.close()
 ~~~
 {: .python}
 
-<!--  -->
 
 If we take a look at the contents of `our_file.txt`, we find the following:
 
@@ -231,20 +216,108 @@ lines = f.readlines()
 ~~~
 {: .python}
 
-<!--  -->
 This tells us we have `ValueError` because we try an
 `I/O operation on closed file.`
 This means we are trying to do an input or output operation,
 such as reading from or writing to a file that is closed.
 
 
+### Comparing two mRNA strands
 
-<!-- --- begin exercise --- -->
+We know have loaded the two mRNA strands, and we want to loop through both mRNA
+strings simultaneously, nucleotide by nucleotide.
+This can be done using `for` loops (see the box below),
+but the simplest solution is to use a `while` loop.
+We loop over all indices, and access the corresponding nucleotide in each mRNA string,
+and if they differ we have found the mutation site.
 
-### Exercise 1: write something about yourself to a file
+
+~~~
+index = 0
+while index < len(mRNA_original):
+   normal = mRNA_original[index]
+   sickle = mRNA_mutation[index]
+
+   if normal != sickle:
+       print("Mutation has switched", normal, "to", sickle, "at", index)
+
+   index += 1
+~~~
+{: .python}
+
+There is a substitution from `A` to `U` in the mRNA for a hemoglobin subunit,
+and the corresponding substitution in the DNA is from an `A` to a `T`.
+In order to identify a suitable restriction enzyme for the restriction cutting,
+we need the sequence surrounding the mutation.
+To do this, we print the five characters before and after the index for the
+mutation location when we find the mutation.
 
 
-*a)*
-Skiv noe tekst, for eksempel om deg selv, til en ny fil, og les filen
+~~~
+index = 0
+while index < len(mRNA_original):
+   normal = mRNA_original[index]
+   sickle = mRNA_mutation[index]
 
-<!-- --- end exercise --- -->
+   if normal != sickle:
+       print("Mutation has switched", normal, "to", sickle, "at", index)
+
+       print("Surrounding sequence, original:", mRNA_original[index - 5:index + 6])
+       print("Surrounding sequence, mutation:", mRNA_mutation[index - 5:index + 6])
+
+   index += 1
+~~~
+{: .python}
+
+Notice that we put the `index += 1` statement at the end of the code block.
+This is to make sure we do not change the current index before we print it.
+Further, we slice from `index - 5` to `index + 6` because slicing goes from the start
+index to, but not including, the stop index.
+
+---
+<!-- Comparing two mRNA strands using a `for` loop and the zip-function -->
+
+We know how to loop through one string at the time with a `for` loop,
+but here we want to loop through both mRNA strings simultaneously,
+nucleotide by nucleotide.
+It is possible loop over multiple lists at the same time using the `zip()`
+function.
+An example of the use of `zip()` is:
+
+
+
+~~~
+list_a = [1, 2, 3, 4]
+list_b = [10, 20, 30, 40]
+
+for a, b in zip(list_a, list_b):
+    print(a, b)
+~~~
+{: .python}
+
+Note how the `a` and `b` variables are assigned the values of the
+two lists in turn.
+If the two lists are not of equal length,
+the loop stops when the end of the shortest list is reached:
+
+~~~
+list_a = [1, 2, 3, 4]
+list_b = [10, 20, 30, 40, 50, 60]
+
+for a, b in zip(list_a, list_b):
+    print(a, b)
+~~~
+{: .python}
+
+
+We loop over our two hemoglobin mRNA strands
+using `zip()` in the same way,
+and test if each nucleotide in the two sequences are equal.
+If they differ, we print the nucleotides:
+
+~~~
+for normal, sickle in zip(mRNA_original, mRNA_mutation):
+    if normal != sickle:
+        print("Mutation has switched", normal, "to", sickle)
+~~~
+{: .python}
