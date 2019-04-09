@@ -3,6 +3,20 @@ layout: page
 title: "Licenses"
 root: .
 ---
+
+> ## About this version
+>
+> **This lesson is adapted under the license below from
+> ["Plotting and Programming in Python"](http://swcarpentry.github.io/python-novice-gapminder/)
+> by Lex Nederbragt, spring 2019.
+> The original license also applies to this version
+> and attribution should be to both the original lesson and this one.**
+{: .callout}
+
+## Additional Material
+
+'Home' icon by [Timothy Miller](https://www.iconfinder.com/iconsets/pictype-free-vector-icons), [CC BY-SA 3.0](https://commons.wikimedia.org/w/index.php?curid=34829035).
+
 ## Instructional Material
 
 All Software Carpentry and Data Carpentry instructional material is

@@ -12,26 +12,27 @@ This lesson references the Jupyter Notebook,
 but can be taught using a regular Python interpreter as well.
 Please note that this lesson uses Python 3 rather than Python 2.
 
-> ## Under Design
+> ## About this version
 >
-> **This lesson is currently in its early design stage;
-> please check [the design notes]({{ page.root }}/design/)
-> to see what we have so far.
-> Contributions are very welcome:
-> we would be particularly grateful for exercises
-> and for commentary on the ones already there.**
+> **This lesson is modified from the official Software Carpentry lesson
+> ["Plotting and Programming in Python"](http://swcarpentry.github.io/python-novice-gapminder/)
+> to be used for the course ['MBV3070 Bioinformatics'](https://www.uio.no/studier/emner/matnat/ibv/MBV3070/)
+> at the University of Oslo, spring 2019,
+> by Lex Nederbragt.**
 {: .callout}
 
 > ## Prerequisites
 >
 > 1.  Learners need to understand what files and directories are,
 >     what a working directory is,
->     and how to start a Python interpreter.
+>     and how to start a Python interpreter or Jupyter Notebook.
 >
-> 2. Learners must install Python before the class starts.
+> 2. Learners must install Python before the class starts
+>    if they do not have access to a cloud instance for Jupyter Notebooks.
 >
-> 3. Learners must get the gapminder data before class starts:
->    please download and unzip the file 
+> 3. For others than MBV3070 students:
+>    Learners must get the gapminder data before class starts:
+>    please download and unzip the file
 >    [python-novice-gapminder-data.zip]({{page.root}}/files/python-novice-gapminder-data.zip).
 >
 >    Please see [the setup instructions]({{ page.root }}/setup/)
