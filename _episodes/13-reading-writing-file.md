@@ -10,6 +10,14 @@ keypoints:
 - ""
 ---
 
+> ## About this version
+>
+> This episode replaces to original episode [Looping Over Data Sets](http://swcarpentry.github.io/python-novice-gapminder/13-looping-data-sets/index.html).
+{: .callout}
+
+
+FIXME something about why hemoglobin.
+
 ### Reading FASTA files with the open-function
 
 The hemoglobin sequences are so large, that we should not store them directly in the code.
