@@ -132,6 +132,11 @@ cos(pi) is -1.0
 *   But can make programs harder to understand,
     since readers must learn your program's aliases.
 
+## Exercises on slides
+* There Are Many Ways To Import Libraries
+* Locating the Right Module
+
+<!--
 > ## Exploring the Math Module
 >
 > 1. What function from the `math` module can you use to calculate a square root
@@ -152,64 +157,6 @@ cos(pi) is -1.0
 > {: .solution}
 {: .challenge}
 
-> ## Locating the Right Module
->
-> You want to select a random character from a string:
->
-> ~~~
-> bases = 'ACTTGCTTGAC'
-> ~~~
-> {: .python}
->
-> 1. Which [standard library][stdlib] module could help you?
-> 2. Which function would you select from that module? Are there alternatives?
-> 3. Try to write a program that uses the function.
->
-> > ## Solution
-> >
-> > The [random module](randommod) seems like it could help you.
-> >
-> > The string has 11 characters, each having a positional index from 0 to 10.
-> > You could use `random.randrange` function (or the alias `random.randint`
-> > if you find that easier to remember) to get a random integer between 0 and
-> > 10, and then pick out the character at that position:
-> >
-> > ~~~
-> > from random import randrange
-> >
-> > random_index = randrange(len(bases))
-> > print(bases[random_index])
-> > ~~~
-> > {: .python}
-> >
-> > or more compactly:
-> >
-> > ~~~
-> > from random import randrange
-> >
-> > print(bases[randrange(len(bases))])
-> > ~~~
-> > {: .python}
-> >
-> > Perhaps you found the `random.sample` function? It allows for slightly
-> > less typing:
-> >
-> > ~~~
-> > from random import sample
-> >
-> > print(sample(bases, 1)[0])
-> > ~~~
-> > {: .python}
-> >
-> > Note that this function returns a list of values. We will learn about
-> > lists in episode 11.
-> >
-> > There's also other functions you could use, but with more convoluted
-> > code as a result.
-> {: .solution}
-{: .challenge}
-
-
 > ## Jigsaw Puzzle (Parson's Problem) Programming Example
 >
 > Rearrange the following statements so that a random
@@ -229,9 +176,9 @@ cos(pi) is -1.0
 > > ## Solution
 > >
 > > ~~~
-> > import math 
+> > import math
 > > import random
-> > bases = "ACTTGCTTGAC" 
+> > bases = "ACTTGCTTGAC"
 > > n_bases = len(bases)
 > > idx = random.randrange(n_bases)
 > > print("random base", bases[idx], "base index", idx)
@@ -298,37 +245,6 @@ cos(pi) is -1.0
 > {: .solution}
 {: .challenge}
 
-> ## There Are Many Ways To Import Libraries!
->
-> Match the following print statements with the appropriate library calls.
->
-> Print commands:
->
-> 1. `print("sin(pi/2) =",sin(pi/2))`
-> 2. `print("sin(pi/2) =",m.sin(m.pi/2))`
-> 3. `print("sin(pi/2) =",math.sin(math.pi/2))`
->
-> Library calls:
->
-> 1. `from math import sin,pi`
-> 2. `import math`
-> 3. `import math as m`
-> 4. `from math import *`
->
-> > ## Solution
-> >
-> > 1. Library calls 1 and 4. In order to directly refer to `sin` and `pi` without
-> >    the library name as prefix, you need to use the `from ... import ...`
-> >    statement. Whereas library call 1 specifically imports the two functions
-> >    `sin` and `pi`, library call 4 imports all functions in the `math` module.
-> > 2. Library call 3. Here `sin` and `pi` are referred to with a shortened library
-> >    name `m` instead of `math`. Library call 3 does exactly that using the
-> >    `import ... as ...` syntax - it creates an alias for `math` in the form of
-> >    the shortened name `m`.
-> > 3. Library call 2. Here `sin` and `pi` are referred to with the regular library
-> >    name `math`, so the regular `import ...` call suffices.
-> {: .solution}
-{: .challenge}
 
 > ## Importing Specific Items
 >
@@ -380,6 +296,8 @@ cos(pi) is -1.0
 > >    "math domain error" makes it clearer what the problem is.
 > {: .solution}
 {: .challenge}
+
+-->
 
 [pypi]: https://pypi.python.org/pypi/
 [stdlib]: https://docs.python.org/3/library/
