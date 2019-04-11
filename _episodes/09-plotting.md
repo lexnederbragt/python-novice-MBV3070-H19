@@ -5,16 +5,18 @@ exercises: 15
 questions:
 - "How can I plot my data?"
 - "How can I save my plot for publishing?"
+- "How do I develop a program from scratch?"
 objectives:
-- "Create a time series plot showing a single data set."
 - "Create a scatter plot showing relationship between two data sets."
 keypoints:
 - "[`matplotlib`](https://matplotlib.org/) is the most widely used scientific plotting library in Python."
-- "Plot data directly from a Pandas dataframe."
-- "Select and transform data, then plot it."
-- "Many styles of plot are available: see the [Python Graph Gallery](https://python-graph-gallery.com/matplotlib/) for more options."
+- "Programs are developed in steps"
+- "Modularise program design using functions"
 - "Can plot many sets of data together."
 ---
+
+**NOTE** this is a incompletely developed lesson, for example, the output of the different commands is not present.
+
 ## [`matplotlib`](https://matplotlib.org/) is the most widely used scientific plotting library in Python.
 
 *   Commonly use a sub-library called [`matplotlib.pyplot`](https://matplotlib.org/api/pyplot_api.html).
@@ -39,131 +41,439 @@ plt.ylabel('Position (km)')
 {: .language-python}
 
 ![Simple Position-Time Plot](../fig/9_simple_position_time_plot.svg)
-## Plot data directly from a [`Pandas dataframe`](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html).
 
-*   We can also plot [Pandas dataframes](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html).
-*   This implicitly uses [`matplotlib.pyplot`](https://matplotlib.org/api/pyplot_api.html).
-*   Before plotting, we convert the column headings from a `string` to `integer` data type, since they represent numerical values
+
+## Developing a program to plot GC Percentage of a bacterial genome
+
+We want to create a plot of the frequency distribution of GC% of a genome in 100 bp windows.
+Goals:
+* read in the genome sequence
+* split up into 100 nucleotide windows
+* calculate %GC for each window
+* plot the frequency of GC%s
+
+
+#### Reading in the genome
+
+We already know how to a fasta file. This time, we use genomic DNA, not RNA.
+
 
 ~~~
-import pandas
+filename = 'data/NC_000913_E_coli_K12.fasta'
+f = open(filename)
+lines = f.readlines()
+f.close()
 
-data = pandas.read_csv('data/gapminder_gdp_oceania.csv', index_col='country')
-
-# Extract year from last 4 characters of each column name
-years = data.columns.str.strip('gdpPercap_')
-# Convert year values to integers, saving results back to dataframe
-data.columns = years.astype(int)
-
-data.loc['Australia'].plot()
+print("Identifier:")
+print(lines[0])
+genome = ""
+for line in lines[1:]:
+    genome += line.strip()
+print(len(genome))
 ~~~
 {: .language-python}
 
-![GDP plot for Australia](../fig/9_gdp_australia.svg)
-## Select and transform data, then plot it.
+#### Creating non-overlapping windows
 
-*   By default, [`DataFrame.plot`](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.plot.html#pandas.DataFrame.plot) plots with the rows as the X axis.
-*   We can transpose the data in order to plot multiple series.
+We want to develop a program that splits a DNA sequence into 100 bp, non overlapping windows. It is always a good idea to start with a simpler example, make that work, and then expand to the real situation you need the program for.
+
+So, let's use a dummy DNA sequence first.
+
 
 ~~~
-data.T.plot()
-plt.ylabel('GDP per capita')
+seq = 'A' * 10 + 'C' * 10 + 'G' * 10 + 'T' * 10
+seq = 3 * seq
+print(seq)
 ~~~
 {: .language-python}
 
-![GDP plot for Australia and New Zealand](../fig/9_gdp_australia_nz.svg)
+Now we split it into 10 base windows.
+We can us the `range(start, stop, step)` command to construct a loop for the indices:
+
+
+~~~
+length = len(seq)
+window = 10
+for i in range(0, length, window):
+    print(i)
+~~~
+{: .language-python}
+
+This givs us the starting index. The final index is the starting index + the length of the window. Let's check we now get the right indices:
+
+* from 0 to 10 (not including)
+* from 10 to 20 (not including)
+* from 20 to 30 (not including)
+* etc
+
+
+~~~
+length = len(seq)
+window = 10
+for i in range(0, length, window):
+    print(i, i + window)
+~~~
+{: .language-python}
+
+Now we can slice the dna sequence:
+
+
+~~~
+length = len(seq)
+window = 10
+for i in range(0, length, window):
+    print(i, i + window, seq[i: i + window])
+~~~
+{: .language-python}
+
+What if we do 100 bp windows?
+
+
+~~~
+length = len(seq)
+window = 100
+for i in range(0, length, window):
+    print(i, i + window, seq[i: i + window])
+~~~
+{: .language-python}
+
+#### Creating non-overlapping windows, DNA
+
+We have the basic code, let's adjust it for our genome. We'll test for the first 10 windows only here
+
+
+~~~
+length = 10000 # would normally use len(genome)
+window = 100
+for i in range(0, length, window):
+    segment = genome[i: i + window]
+    print(i, i + 10, segment)
+~~~
+{: .language-python}
+
+#### GC percentage
+
+Now we can start developing code for calculating the GC% for each segment. We have seen this before in one of the exercises:
+
+
+~~~
+dna = "ACGT"
+g = dna.count("G")
+c = dna.count("C")
+gc = (g + c)*100/len(dna)
+print(gc)
+print(round(gc))
+~~~
+{: .language-python}
+
+For simplicity, we will round off the percentage to whole integers.
+
+#### Wrap this in a function
+
+
+~~~
+def perc_gc(dna):
+    """Calculates percentage GC for a DNA sequence
+       Rounds off to zero decimals"""
+    dna = dna.upper()
+    g = dna.count("G")
+    c = dna.count("C")
+    gc = (g + c)*100/len(dna)
+    return(round(gc))
+
+dna = "ACGT"
+print(perc_gc(dna))
+~~~
+{: .language-python}
+
+#### Use our function for the genome
+
+
+~~~
+length = len(genome)
+window = 100
+for i in range(0, length, window):
+    segment = genome[i: i + window]
+    print(perc_gc(segment))
+~~~
+{: .language-python}
+
+We want to collect the percentages so we can plot a histogram og their frequencies. We'll try a list of percentages first.
+
+
+~~~
+length = len(genome)
+window = 100
+GCs = []
+for i in range(0, length, window):
+    segment = genome[i: i + window]
+    gc = perc_gc(segment)
+    GCs.append(gc)
+~~~
+{: .language-python}
+
+Let's plot this! We use the `hist` (histogram) function from `matplotlib`:
+
+
+~~~
+import matplotlib.pyplot as plt
+plt.hist(GCs)
+plt.show()
+~~~
+{: .language-python}
+
+With more resolution:
+
+
+~~~
+plt.hist(GCs, bins = 100)
+plt.show()
+~~~
+{: .language-python}
+
+#### Use dictionary instead
+
+Here is a way to make a line plot of the frequencies. There are better ways, but this illustrates the principle with fairly easy code. First, we replace the list with a dictionary:
+
+
+~~~
+length = len(genome)
+window = 100
+GCs = {}
+for i in range(0, length, window):
+    segment = genome[i: i + window]
+    gc = perc_gc(segment)
+    GCs[gc] = GCs[gc] + 1
+~~~
+{: .language-python}
+
+Hmm, this does not work as the dictionary is empty and we try to increase a non exitsing key + value combination.
+
+We can set up the dictionary to have all possible keys (gc percentages), with `0` for all values:
+
+
+~~~
+GCs = {}
+for i in range(0,100):
+    GCs[i] = 0
+GCs
+~~~
+{: .language-python}
+
+Now we can fill the dictionary:
+
+
+~~~
+for i in range(0, length, window):
+    segment = genome[i: i + window]
+    gc = perc_gc(segment)
+    GCs[gc] += 1
+~~~
+{: .language-python}
+
+The full program than becomes:
+
+
+~~~
+length = len(genome)
+window = 100
+GCs = {}
+for i in range(0,100):
+    GCs[i] = 0
+for i in range(0, length, window):
+    segment = genome[i: i + window]
+    gc = perc_gc(segment)
+    GCs[gc] += 1
+~~~
+{: .language-python}
+
+~~~
+GCs
+~~~
+{: .language-python}
+
+#### Plotting
+
+Now we can make a line plot with keys on the `x` axis and values on the `y`:
+
+
+~~~
+plt.plot(GCs.keys(), GCs.values(), '-')
+plt.show()
+~~~
+{: .language-python}
+
+Adding axis labels:
+
+
+~~~
+plt.plot(GCs.keys(), GCs.values(), '-')
+plt.xlabel("Percentage GC in 100 bp window")
+plt.ylabel("Count")
+plt.show()
+~~~
+{: .language-python}
+
+#### Wrap all parts in a function
+
+
+~~~
+def get_genome(filename):
+    """Reads a fasta file and splits into identifier (first line)
+       and sequence (concatenation of all other lines)"""
+    f = open(filename)
+    lines = f.readlines()
+    f.close()
+
+    identifier = lines[0]
+    genome = ""
+    for line in lines[1:]:
+        genome += line.strip()
+    return(identifier, genome)
+
+filename = 'data/NC_000913_E_coli_K12.fasta'
+identifier, genome = get_genome(filename)
+print(identifier, len(genome))
+~~~
+{: .language-python}
+
+~~~
+def get_gc_freq(genome, window):
+    """Creates a dictionary with frequency of %GC for each window in genome"""
+    length = len(genome)
+    GCs = {}
+    for i in range(0,100):
+        GCs[i] = 0
+    for i in range(0, length, window):
+        segment = genome[i: i + window]
+        gc = perc_gc(segment)
+        GCs[gc] += 1
+    return(GCs)
+~~~
+{: .language-python}
+
+The main program becomes now very short!
+
+
+~~~
+# load genome
+filename = 'data/NC_000913_E_coli_K12.fasta'
+identifier, genome = get_genome(filename)
+print(identifier, len(genome))
+
+# get GC frequencies
+window = 100
+GCs = get_gc_freq(genome, window)
+
+# plot
+plt.plot(GCs.keys(), GCs.values(), '-')
+plt.xlabel("Percentage GC in 100 bp window")
+plt.ylabel("Count")
+plt.show()
+~~~
+{: .language-python}
+
+Let's try the two other genomes in the `data` folder:
+
+
+~~~
+filename2 = 'data/AKVW01.1_Rhodobacter_sphaeroides.fasta'
+id2, genome2 = get_genome(filename2)
+print(id2, len(genome2))
+GCs2 = get_gc_freq(genome2, window)
+plt.plot(GCs2.keys(), GCs2.values(), '-')
+plt.xlabel("Percantage GC in 100 bp window")
+plt.ylabel("Count")
+plt.show()
+~~~
+{: .language-python}
+
+Can we plot two datasets together?
+
+
+~~~
+plt.plot(GCs.keys(), GCs.values(), '-')
+plt.plot(GCs2.keys(), GCs2.values(), '-')
+plt.xlabel("Percantage GC in 100 bp window")
+plt.ylabel("Count")
+plt.show()
+~~~
+{: .language-python}
+
+What about the third dataset?
+
+
+~~~
+filename3 = 'data/AL844501.2_Plasmodium_falciparum.fasta'
+id3, genome3 = get_genome(filename3)
+print(id3, len(genome3))
+GCs3 = get_gc_freq(genome3, window)
+plt.plot(GCs.keys(), GCs.values(), '-')
+plt.plot(GCs2.keys(), GCs2.values(), '-')
+plt.plot(GCs3.keys(), GCs3.values(), '-')
+plt.xlabel("Percantage GC in 100 bp window")
+plt.ylabel("Count")
+plt.show()
+~~~
+{: .language-python}
+
+#### Scaling the Malaria data
+
+
+~~~
+GCs3 = get_gc_freq(genome3[0:7000000], window)
+plt.plot(GCs.keys(), GCs.values(), '-')
+plt.plot(GCs2.keys(), GCs2.values(), '-')
+plt.plot(GCs3.keys(), GCs3.values(), '-')
+plt.xlabel("Percantage GC in 100 bp window")
+plt.ylabel("Count")
+plt.show()
+~~~
+{: .language-python}
+
+#### Add legend
+
+
+~~~
+GCs3 = get_gc_freq(genome3[0:7000000], window)
+plt.plot(GCs.keys(), GCs.values(), '-', label = "E. coli")
+plt.plot(GCs2.keys(), GCs2.values(), '-', label = "R. sphaeroides")
+plt.plot(GCs3.keys(), GCs3.values(), '-', label = "P. falciparum")
+plt.xlabel("Percantage GC in 100 bp window")
+plt.ylabel("Count")
+plt.legend()
+plt.show()
+~~~
+{: .language-python}
+
+
 ## Many styles of plot are available.
 
-*   For example, do a bar plot using a fancier style.
+*   For example, using a fancier style.
 
 ~~~
 plt.style.use('ggplot')
-data.T.plot(kind='bar')
-plt.ylabel('GDP per capita')
+plt.plot(GCs.keys(), GCs.values(), '-', label = "E. coli")
+plt.plot(GCs2.keys(), GCs2.values(), '-', label = "R. sphaeroides")
+plt.plot(GCs3.keys(), GCs3.values(), '-', label = "P. falciparum")
+plt.xlabel("Percantage GC in 100 bp window")
+plt.ylabel("Count")
+plt.legend()
+plt.show()
 ~~~
 {: .language-python}
 
-![GDP barplot for Australia](../fig/9_gdp_bar.svg)
+**The data**
 
-## Data can also be plotted by calling the `matplotlib` `plot` function directly.
-*   The command is `plt.plot(x, y)`
-*   The color / format of markers can also be specified as an optical argument: e.g. 'b-' is a blue line, 'g--' is a green dashed line.
-
-## Get Australia data from dataframe
-
-~~~
-years = data.columns
-gdp_australia = data.loc['Australia']
-
-plt.plot(years, gdp_australia, 'g--')
-~~~
-{: .language-python}
-
-![GDP formatted plot for Australia](../fig/9_gdp_australia_formatted.svg)
-
-## Can plot many sets of data together.
-
-~~~
-# Select two countries' worth of data.
-gdp_australia = data.loc['Australia']
-gdp_nz = data.loc['New Zealand']
-
-# Plot with differently-colored markers.
-plt.plot(years, gdp_australia, 'b-', label='Australia')
-plt.plot(years, gdp_nz, 'g-', label='New Zealand')
-
-# Create legend.
-plt.legend(loc='upper left')
-plt.xlabel('Year')
-plt.ylabel('GDP per capita ($)')
-~~~
-{: .language-python}
-
-> ## Adding a Legend
-> 
-> Often when plotting multiple datasets on the same figure it is desirable to have 
-> a legend describing the data.
->
-> This can be done in `matplotlib` in two stages:
-> 
-> * Provide a label for each dataset in the figure:
->
-> ~~~
-> plt.plot(years, gdp_australia, label='Australia')
-> plt.plot(years, gdp_nz, label='New Zealand')
-> ~~~
->
-> * Instruct `matplotlib` to create the legend.
->
-> ~~~
-> plt.legend()
-> ~~~
->
-> By default matplotlib will attempt to place the legend in a suitable position. If you
-> would rather specify a position this can be done with the `loc=` argument, e.g to place
-> the legend in the upper left corner of the plot, specify `loc='upper left'`
->
-> {: .language-python}
-{: .callout}
+The references used for alignment were
+* *E. coli K12 substr. MG1655* [GenBank NC_000913.2](https://www.ncbi.nlm.nih.gov/nuccore/NC_000913.2)
+* *R. sphaeroides 2.4.1* chromosome 1 [GenBank AKVW01000000](https://www.ncbi.nlm.nih.gov/nuccore/AKVW01000001.1)
+* *P. falciparum* (Malaria parasite) chromosome 1, [GenBank LR131290.1](https://www.ncbi.nlm.nih.gov/nuccore/LR131290.1)
 
 
-![GDP formatted plot for Australia and New Zealand](../fig/9_gdp_australia_nz_formatted.svg)
-*   Plot a scatter plot correlating the GDP of Australia and New Zealand
-*   Use either `plt.scatter` or `DataFrame.plot.scatter`
 
-~~~
-plt.scatter(gdp_australia, gdp_nz)
-~~~
-{: .language-python}
 
-![GDP correlation using plt.scatter](../fig/9_gdp_correlation_plt.svg)
-~~~
-data.T.plot.scatter(x = 'Australia', y = 'New Zealand')
-~~~
-{: .language-python}
-
-![GDP correlation using data.T.plot.scatter](../fig/9_gdp_correlation_data.svg)
-
+<!--
 > ## Minima and Maxima
 >
 > Fill in the blanks below to plot the minimum GDP per capita over time
@@ -270,9 +580,10 @@ data.T.plot.scatter(x = 'Australia', y = 'New Zealand')
 > >
 > {: .solution}
 {: .challenge}
+-->
 
 > ## Saving your plot to a file
-> 
+>
 > If you are satisfied with the plot you see you may want to save it to a file,
 > perhaps to include it in a publication. There is a function in the
 > matplotlib.pyplot module that accomplishes this:
@@ -282,22 +593,24 @@ data.T.plot.scatter(x = 'Australia', y = 'New Zealand')
 > plt.savefig('my_figure.png')
 > ~~~
 > {: .language-python}
-> 
+>
 > will save the current figure to the file `my_figure.png`. The file format
 > will automatically be deduced from the file name extension (other formats
 > are pdf, ps, eps and svg).
 >
 > Note that functions in `plt` refer to a global figure variable
-> and after a figure has been displayed to the screen (e.g. with `plt.show`) 
+> and after a figure has been displayed to the screen (e.g. with `plt.show`)
 > matplotlib will make this  variable refer to a new empty figure.
 > Therefore, make sure you call `plt.savefig` before the plot is displayed to
 > the screen, otherwise you may find a file with an empty plot.
 >
+
+<!--
 > When using dataframes, data is often generated and plotted to screen in one line,
 > and `plt.savefig` seems not to be a possible approach.
 > One possibility to save the figure to file is then to
 >
-> * save a reference to the current figure in a local variable (with `plt.gcf`) 
+> * save a reference to the current figure in a local variable (with `plt.gcf`)
 > * call the `savefig` class method from that varible.
 >
 > ~~~
@@ -306,6 +619,8 @@ data.T.plot.scatter(x = 'Australia', y = 'New Zealand')
 > fig.savefig('my_figure.png')
 > ~~~
 > {: .language-python}
+-->
+
 {: .callout}
 
 > ## Making your plots accessible
