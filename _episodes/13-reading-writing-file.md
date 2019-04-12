@@ -162,7 +162,7 @@ for line in lines[1:]:
 
 We have until now only read data from a file,
 but it is also useful to know how to write information to a file.
-Writing to a file is quite similar to writing text to the terminal.
+Writing to a file is quite similar to writing text to the notebook.
 We can write to a file by opening it with the argument `"w"` (for write) or
 `"a"` (for append):
 
