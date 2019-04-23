@@ -74,12 +74,102 @@ Run the commands shown below on the command line:
 
 Question: can you figure out why the last one fails?
 
-
-FIXME can use Python text editor from Jupyter
-
-
 ## Import functions from script files
+
+
+Let's write a very simple function in a new python script file:
+
+* select 'New' --> 'Text file'
+* change the name to `my_functions.py`:
+* write in this function:
+*
+~~~
+def average(values):
+    if len(values) == 0:
+        return None
+    return sum(values) / len(values)
+~~~
+{: .python}
+
+Note how we get Python syntax highlighting and automatic indentation in the text editor from Jupyter.
+
+On the terminal, in the folder where you saved `my_functions.py`, try running your script:
+
+~~~
+python my_functions.py
+~~~
+{: .bash}
+
+Nothing happens. If we want to use the script we can *import* the function in a Jupyter Notebook or in another script. Try both approaches with these lines of Python:
+
+~~~
+from my_functions import average
+print(average([1, 2, 5]))
+~~~
+{: .python}
+
+Now see what happens if we add some code at the end of the `my_functions.py` file to test the script:
+
+~~~
+print("testing the script with 3, 7 and 10:")
+print(average([3, 7, 10]))
+~~~
+{: .python}
+
+Now:
+* run the script from the command line
+* rerun the code that imports the function and uses it on `[1, 2, 5]`. _NOTE_ in the Notebook, you will have to restart the kernel to force a new import.
+
+You'll see that *each import runs the testing line*. This is not a bug but a feature - Python will execute any commands in a python script file when importing functions from it.
+
 
 ## Dual usage of script files
 
+This is why you will often see the following construct at the end of script files:
+
+~~~
 `if __name__ == "__main__":`
+    # run some code using functions from the file
+~~~
+{: .python}
+
+Let's adjust our `my_functions.py` file accordingly and test again:
+
+~~~
+def average(values):
+    if len(values) == 0:
+        return None
+    return sum(values) / len(values)
+
+if __name__ == "__main__":
+    print("testing the script with 3, 7 and 10:")
+    print(average([3, 7, 10]))
+
+~~~
+{: .python}
+
+Check the import in the Notebook (after a kernel restart) and as follows on the command line:
+
+~~~
+python test_my_functions.py
+2.6666666666666665
+python my_functions.py
+~~~
+{: .bash}
+
+So, to be able to combine functions and running these functions in a script, with importing functions from that script elsewhere, build up the script file as follows:
+
+~~~
+def function1(argument1, argument2):
+    # do something
+    # return something
+
+def function2(argument):
+    # do something
+    # return something
+
+if __name__ == "__main__":
+    # run some code using function1 and/or function2
+
+~~~
+{: .python}
