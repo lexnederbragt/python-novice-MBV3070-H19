@@ -15,6 +15,10 @@ keypoints:
 - "Use docstrings to provide online help."
 ---
 
+> ## About this episode
+> **This episode is not being taught as part of the MBV3070 course**
+{: .callout}
+
 ## Coding style
 
 Coding style helps us to understand the code better. It helps to maintain and change the code.
@@ -38,8 +42,8 @@ We may highlight some points:
     and to understand what their contributions should look like.
     The [PEP8 application and Python library](https://pypi.python.org/pypi/pep8)
     can check your code for compliance with PEP8.
-*   [Google style guide on Python](https://google.github.io/styleguide/pyguide.html) 
-    supports the use of PEP8 and extend the coding style to more specific structure of 
+*   [Google style guide on Python](https://google.github.io/styleguide/pyguide.html)
+    supports the use of PEP8 and extend the coding style to more specific structure of
     a Python code, which may be interesting also to follow.
 
 ## Use assertions to check for internal errors.
@@ -212,7 +216,7 @@ average(values)
 > > string_machine('et cetera', 10)
 > > ~~~
 > > {: .python}
-> > 
+> >
 > > ~~~
 > > et cetera
 > > *****-***
