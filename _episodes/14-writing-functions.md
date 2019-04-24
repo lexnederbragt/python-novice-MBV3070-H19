@@ -14,6 +14,14 @@ keypoints:
 - "Arguments in call are matched to parameters in definition."
 - "Functions may return a result to their caller using `return`."
 ---
+
+
+> ## About this episode
+> **This episode is not being taught as part of the MBV3070 course**  
+> Instead, [an episode from pythonforbiologists.com](https://pythonforbiologists.com/writing-our-own-functions) is used.
+{: .callout}
+
+
 ## Break programs down into functions to make them easier to understand.
 
 *   Human beings can only keep a few items in working memory at a time.
@@ -187,7 +195,7 @@ result of call is: None
 > >
 > > ~~~
 > > calling <function report at 0x7fd128ff1bf8> 22.5
-> > ~~~ 
+> > ~~~
 > > {: .output}
 > >
 > > A function call always needs parenthesis, otherwise you get memory address of the function object. So, if we wanted to call the function named report, and give it the value 22.5 to report on, we could have our function call as follows
@@ -227,9 +235,9 @@ result of call is: None
 >    print(joined)
 > ~~~
 > {: .python}
-> 
+>
 > > ## Solution
-> > 
+> >
 > > 1. The first line of output (`1871/3/19`) is from the print function inside `print_date()`, while the second line
 > > is from the print function below the function call. All of the code inside `print_date()` is executed first, and
 > > the program then "leaves" the function and executes the rest of the code.   
@@ -256,7 +264,7 @@ result of call is: None
 > >
 > > ~~~
 > > import pandas
-> > 
+> >
 > > def min_in_data(filename):
 > >     data = pandas.read_csv(filename)
 > >     return data.min()
@@ -320,13 +328,13 @@ result of call is: None
 > 3.  When and why is it useful to call functions this way?
 > {: .python}
 > > ## Solution
-> > 
+> >
 > > 1. `2003/2/1`
-> > 2. We saw examples of using *named arguments* when working with the pandas library. For example, when reading in a dataset 
-> > using `data = pandas.read_csv('data/gapminder_gdp_europe.csv', index_col='country')`, the last argument `index_col` is a 
+> > 2. We saw examples of using *named arguments* when working with the pandas library. For example, when reading in a dataset
+> > using `data = pandas.read_csv('data/gapminder_gdp_europe.csv', index_col='country')`, the last argument `index_col` is a
 > > named argument.  
-> > 3. Using named arguments can make code more readable since one can see from the function call what name the different arguments 
-> > have inside the function. It can also reduce the chances of passing arguments in the wrong order, since by using named arguments 
+> > 3. Using named arguments can make code more readable since one can see from the function call what name the different arguments
+> > have inside the function. It can also reduce the chances of passing arguments in the wrong order, since by using named arguments
 > > the order doesn't matter.
 > {: .solution}
 {: .challenge}
@@ -466,7 +474,7 @@ result of call is: None
 > > {: .python}
 > >
 > > 3.
-> > 
+> >
 > > We need to loop over the reported years
 > >    to obtain the average for the relevant ones in the data.
 > >
@@ -489,7 +497,7 @@ result of call is: None
 > > avg_gdp_in_decade('Japan','asia',1983)
 > > ~~~
 > > {: .python}
-> > 
+> >
 > > ~~~
 > > 20880.023800000003
 > > ~~~

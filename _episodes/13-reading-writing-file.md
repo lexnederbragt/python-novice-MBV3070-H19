@@ -339,4 +339,4 @@ for normal, sickle in zip(mRNA_original, mRNA_mutation):
 
 ## Exercise: what does the substitution do?
 
-Now you know what base was changed between the two versions of the hemoglobin sequence, can you, using Python, find out what amino acid changes, if any, the difference results in? 
+Now you know what base was changed between the two versions of the hemoglobin sequence, can you find out what amino acid changes, if any, the difference results in? Later we will learn how to do this exercise using Python.
