@@ -16,7 +16,14 @@ keypoints:
 {: .callout}
 
 
-FIXME something about why hemoglobin.
+Hemoglobin is the protein responsible for binding oxygen in red blood cells.
+It consists of four smaller proteins, called subunits.
+[Sickle-cell anemia](https://en.wikipedia.org/wiki/Sickle_cell_disease) occurs because of a substitution in the DNA sequence that
+codes for one of these subunits.
+A single base in the hemoglobin DNA is changed and the result is a genetic
+disorder where the red blood cells assume a sickle-like shape.
+
+In this episode, we will learn how to read sequences for normal and sickle-cell anemia causing hemoglobins from files. After that, we will compare them and find the substitution between them.
 
 ### Reading FASTA files with the open-function
 
@@ -329,3 +336,7 @@ for normal, sickle in zip(mRNA_original, mRNA_mutation):
         print("Mutation has switched", normal, "to", sickle)
 ~~~
 {: .python}
+
+## Exercise: what does the substitution do?
+
+Now you know what base was changed between the two versions of the hemoglobin sequence, can you, using Python, find out what amino acid changes, if any, the difference results in? 
