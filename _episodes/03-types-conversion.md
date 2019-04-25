@@ -210,7 +210,7 @@ first is 2 and second is 5
 ## Exercises on slides
 * Arithmetic with Different Types
 * variables and types
-* 
+ 
 <!--
 
 > ## Fractions

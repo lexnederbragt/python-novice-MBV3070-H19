@@ -221,6 +221,7 @@ print(ewr_422_yY, 'is', flabadab, 'years old')
 *   Use meaningful variable names to help other people understand what the program does.
 *   The most important "other person" is your future self.
 
+<!--
 > ## Swapping Values
 >
 > Fill the table showing the values of the variables in this program
@@ -357,3 +358,4 @@ print(ewr_422_yY, 'is', flabadab, 'years old')
 > >
 > {: .solution}
 {: .challenge}
+-->
