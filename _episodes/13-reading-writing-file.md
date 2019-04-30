@@ -130,11 +130,11 @@ and loop over all lines from the second line to the last with `lines[1:]`:
 
 
 ~~~
-mRNA = ""
+mRNA_original = ""
 for line in lines[1:]:
-    mRNA += line.strip()
+    mRNA_original += line.strip()
 
-print(mRNA)
+print(mRNA_original)
 ~~~
 {: .python}
 
@@ -154,13 +154,13 @@ The full code for reading a sequence from FASTA files is then:
 
 
 ~~~
-f = open(filename)
+f = open(data/hemoglobin_normal.fasta", "r")
 lines = f.readlines()
 f.close()
 
-mRNA = ""
+mRNA_original = ""
 for line in lines[1:]:
-    mRNA += line.strip()
+    mRNA_original += line.strip()
 
 ~~~
 {: .python}
@@ -172,8 +172,6 @@ but it is also useful to know how to write information to a file.
 Writing to a file is quite similar to writing text to the notebook.
 We can write to a file by opening it with the argument `"w"` (for write) or
 `"a"` (for append):
-
-
 
 ~~~
 f = open("our_file.txt", "w")
@@ -239,6 +237,26 @@ such as reading from or writing to a file that is closed.
 
 ### Comparing two mRNA strands
 
+> ## Load the mutated hemoglobin sequence
+>
+> Reuse the code above to load `data/hemoglobin_sickle.fasta`
+> in a variable called `mRNA_mutation`
+>
+> > ## Solution
+> >
+> > ~~~
+> > f = open(data/hemoglobin_sickle.fasta", "r")
+> > lines = f.readlines()
+> > f.close()
+> >
+> > mRNA_mutation = ""
+> > for line in lines[1:]:
+> >     mRNA_mutation += line.strip()
+> > ~~~
+> > {: .python}
+> {: .solution}
+{: .challenge}
+
 We know have loaded the two mRNA strands, and we want to loop through both mRNA
 strings simultaneously, nucleotide by nucleotide.
 This can be done using `for` loops (see the box below),
@@ -246,60 +264,12 @@ but the simplest solution is to use a `while` loop.
 We loop over all indices, and access the corresponding nucleotide in each mRNA string,
 and if they differ we have found the mutation site.
 
-
-~~~
-index = 0
-while index < len(mRNA_original):
-   normal = mRNA_original[index]
-   sickle = mRNA_mutation[index]
-
-   if normal != sickle:
-       print("Mutation has switched", normal, "to", sickle, "at", index)
-
-   index += 1
-~~~
-{: .python}
-
-There is a substitution from `A` to `U` in the mRNA for a hemoglobin subunit,
-and the corresponding substitution in the DNA is from an `A` to a `T`.
-In order to identify a suitable restriction enzyme for the restriction cutting,
-we need the sequence surrounding the mutation.
-To do this, we print the five characters before and after the index for the
-mutation location when we find the mutation.
-
-
-~~~
-index = 0
-while index < len(mRNA_original):
-   normal = mRNA_original[index]
-   sickle = mRNA_mutation[index]
-
-   if normal != sickle:
-       print("Mutation has switched", normal, "to", sickle, "at", index)
-
-       print("Surrounding sequence, original:", mRNA_original[index - 5:index + 6])
-       print("Surrounding sequence, mutation:", mRNA_mutation[index - 5:index + 6])
-
-   index += 1
-~~~
-{: .python}
-
-Notice that we put the `index += 1` statement at the end of the code block.
-This is to make sure we do not change the current index before we print it.
-Further, we slice from `index - 5` to `index + 6` because slicing goes from the start
-index to, but not including, the stop index.
-
----
-<!-- Comparing two mRNA strands using a `for` loop and the zip-function -->
-
 We know how to loop through one string at the time with a `for` loop,
 but here we want to loop through both mRNA strings simultaneously,
 nucleotide by nucleotide.
 It is possible loop over multiple lists at the same time using the `zip()`
 function.
 An example of the use of `zip()` is:
-
-
 
 ~~~
 list_a = [1, 2, 3, 4]
@@ -336,6 +306,10 @@ for normal, sickle in zip(mRNA_original, mRNA_mutation):
         print("Mutation has switched", normal, "to", sickle)
 ~~~
 {: .python}
+
+
+There is a substitution from `A` to `U` in the mRNA for a hemoglobin subunit,
+and the corresponding substitution in the DNA is from an `A` to a `T`.
 
 ## Exercise: what does the substitution do?
 
