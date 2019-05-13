@@ -82,7 +82,7 @@ Let's write a very simple function in a new python script file:
 * select 'New' --> 'Text file'
 * change the name to `my_functions.py`:
 * write in this function:
-*
+
 ~~~
 def average(values):
     if len(values) == 0:
@@ -128,7 +128,7 @@ You'll see that *each import runs the testing line*. This is not a bug but a fea
 This is why you will often see the following construct at the end of script files:
 
 ~~~
-`if __name__ == "__main__":`
+if __name__ == "__main__":
     # run some code using functions from the file
 ~~~
 {: .python}

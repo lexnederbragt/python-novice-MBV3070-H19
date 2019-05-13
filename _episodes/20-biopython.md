@@ -75,7 +75,7 @@ If you want to extract the sequences into a file in `fasta` format, you'd have t
 ~~~
 from Bio import SeqIO
 
-sequences = SeqIO.parse("cor6_6.gb", "genbank")
+sequences = SeqIO.parse("data/cor6_6.gb", "genbank")
 count = SeqIO.write(sequences, "cor6_6.fasta", "fasta")
 
 print("Converted %i records" % count)
